@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-hello world
+
+<div th:object="${data}">
+    <!-- Object의 경우 $ 가 아니라 * 사용-->
+    <p>이름 : <span th:if="*{name == '이름'}">이름님 반갑습니다.</span></p>
+    <p>나이1 : <span th:if="*{age > 15}">15세 이상입니다.</span></p>
+    <p>나이2 : <span th:unless="*{age > 15}">15세 이하입니다.</span></p>
+    <p>나이3 : <span th:text="*{age > 15} ? '15세 이상' : '15세 이하'">15세 이상입니다.</span></p>
+    <p>전화번호 : <span th:text="*{tel}"></span></p>
+</div>
 </body>
 </html>
