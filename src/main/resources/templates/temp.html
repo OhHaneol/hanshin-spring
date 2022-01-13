@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--form을 작성 하고 submit이 일어나면 /temp 라는 url에다가 s1, s2 각각에 선택된 값을 전송-->
+<!--enctype의 경우 밑의 input에서 file을 넣을 때 그냥 하면 binary 인식이 불가능해서 multipart/form-data 로 넣어줌.-->
+<!--<form action="/temp" method="post" enctype="multipart/form-data">-->
+<!--    <input type="text" name="s1"><br/>-->
+<!--    <select name="s2" id="">-->
+<!--        <option value="">선택하세요.</option>-->
+<!--        <option value="1번">1번 선택</option>-->
+<!--        <option value="2번">2번 선택</option>-->
+<!--    </select>-->
+<!--    <input type="file" name="f1">-->
+<!--    <button type="submit">확인</button>-->
+<!--</form>-->
+<form action="/temp" method="get">
+    <input type="text" name="code"><br/>
+    <input type="text" name="id"><br/>
+    <button type="submit">확인</button>
+</form>
+</body>
+</html>
