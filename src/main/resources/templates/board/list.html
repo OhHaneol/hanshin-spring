@@ -11,12 +11,12 @@
             <legend class="visually-hidden">검색</legend>
             <div class="col-auto">
                 <select class="form-select" aria-label="Default select example">
-                    <option value="1">제목</option>
-                    <option value="2">내용</option>
+                    <option value="1" th:selected="srchType == 'title'}">제목</option>
+                    <option value="2" th:selected="srchType == 'content'}">내용</option>
                 </select>
             </div>
             <div class="col-auto">
-                <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                <input type="text" name="srchKeyword" class="form-control" th:value="${srchKeyword}" aria-describedby="검색어">
             </div>
             <div class="col-auto">
                 <button class="btn btn-primary" type="submit">검색</button>
@@ -65,7 +65,7 @@
                 </div>
             </td>
             <td class="text-center" th:text="${result.id}"></td>
-            <td><a th:href="@{/board/mainView(id=${result.id})}" th:text="${result.title}"></a></td>
+            <td><a th:href="@{/board/mainView(id=${result.id}, srchType=${srchTyep}, srchKeyword=${srchKeyword})}" th:text="${result.title}"></a></td>
             <td class="text-center" th:text="${result.writer}"></td>
 <!--            temporals.format 이용해서 원하는 형식으로 날짜 출력-->
             <td class="text-center" th:text="${#temporals.format(result.regDate, 'yyyy-MM-dd HH:mm')}"></td>

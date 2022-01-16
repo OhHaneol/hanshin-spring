@@ -1,8 +1,10 @@
 package com.example.demo.board.controller.model;
 
+import com.example.demo.model.SearchHelper;
+
 import java.time.LocalDateTime;
 
-public class BoardVO {
+public class BoardVO extends SearchHelper {
     private int id;
     private String title;
     private String content;

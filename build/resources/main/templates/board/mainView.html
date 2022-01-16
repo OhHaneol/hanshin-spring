@@ -28,7 +28,6 @@
             <a href="" class="btn btn-warning">수정</a>
             <button type="button" class="btn btn-danger">삭제</button>
         </div>
-        //  기본 list 페이지가 아니라 parameter를 가지고 있는, 그니까 전 list 페이지에서 7번 검색 후 7번 게시글에 들어와서 목록 버튼 클릭 시 7번 게시글 검색된 list 페이지로 이동하도록.
         <a th:href="@{/board/list(srchType=${srchTyep}, srchKeyword=${srchKeyword})}" class="btn btn-secondary">목록</a>
     </div>
 </article>
