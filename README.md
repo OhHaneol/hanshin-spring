@@ -49,3 +49,16 @@
   2. 그런 다음 html 문서에서 script 태그로 작성 후 다시 application 을 run 하면 console 에 jquery를 찾지 못해서 404 error 를 띄움.
   3. 이 경우 resources.application.properties 파일에 관련 내용을 작성하면 해결!
   4. application.properties 파일은 데이터베이스 접속에 대한 정보와 스프링 프로젝트에 대한 모든 정보를 기술하는 파일.
+
+
+### 3. 데이터 송수신
+
+- #### MVC 아키텍처(Model - View - Controller)
+  - Model: 데이터를 조회하고 결과를 생성하며 Service 와 DAO 로 나뉘어짐.
+    - Service는 비즈니스 로직으로, 여러 Controller 단에서 재사용성이 있는 코드를 Service 단에서 처리하도록 한다.
+    - DAO 는 데이터베이스에 직접 접근하기 위한 파트이다.
+  - View: 화면을 출력.
+  - Controller: 모델과 뷰를 제어.
+- #### HTTP 프로토콜
+  - 웹 브라우저와 웹 서버간 통신 규약.
+- #### Annotation part 2
