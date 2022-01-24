@@ -1,4 +1,4 @@
-package com.example.demo.board.controller.model;
+package com.example.demo.board.model;
 
 import com.example.demo.model.SearchHelper;
 

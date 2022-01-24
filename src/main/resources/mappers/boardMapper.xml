@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.BoardMapper">
+
+    //  밑에서 id 등 다른 이름으로 바꾸고 싶을 때 property 로 바꿀 수 있고
+    //  jataType으로 Date 형식도 바꿔서 할 수 있도록 resultMap 사용!
+    <resultMap id="boardResult" type="BoardVO">
+        <id column="id" property="no" />
+        <result column="title" property="title" />
+        <result column="reg_date" javaType="java.sql.Date" />
+    </resultMap>
+
+    //  원래는 resultType에 com.example.demo.board.model.BoardVO 다 쳐야 하지만
+    //  application.properties 에서 mybatis.type-aliases 에서 설정했기 떄문에 BoardVO 만 입력해도 됨!
+    //  위에서 resultMap 한 경우 resultType 대신 resultMap 으로 적용!
+<!--    <select id="selectItem" resultType="BoardVO">-->
+    <select id="selectItem" resultMap="boardResult">
+
+        SELECT
+            id,
+            title,
+            content,
+            writer,
+            reg_date,   // regDate로 _를 없애줘야 하는데 application.properties 에서 underscore-to-camel-case=true 설정으로 자동 변환 가능능            count
+
+
+    </select>
+
+    <insert id="insertItem">
+        쿼리문
+    </insert>
+
+    <update id="updateItem">
+        쿼리문
+    </update>
+
+    <delete id="deleteItem">
+        쿼리문
+    </delete>
+
+</mapper>

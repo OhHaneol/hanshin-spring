@@ -1,6 +1,6 @@
 package com.example.demo.board.controller;
 
-import com.example.demo.board.controller.model.BoardVO;
+import com.example.demo.board.model.BoardVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
