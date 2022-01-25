@@ -25,7 +25,50 @@
             content,
             writer,
             reg_date,   // regDate로 _를 없애줘야 하는데 application.properties 에서 underscore-to-camel-case=true 설정으로 자동 변환 가능능            count
+            count
+        FROM board
 
+<!--        //  밑의 동적 쿼리 01 방식으로 하지 않고 <where> 태그를 이용해 동적인 WHERE 절을 구현할 수 있게 해준다.-->
+<!--        //  쿼리문에는 WHERE 키워드가 없지만 태그에서 자동으로 where 키워드를 생성해주며, AND 문 또한 자동으로 문법에 맞게 치환해준다.-->
+<!--        <where>-->
+<!--            <if test="title != null and title = ''">-->
+<!--                AND title =#{title}-->
+<!--            </if>-->
+<!--            <if test="id > 0">-->
+<!--                AND id = 100-->
+<!--            </if>-->
+<!--        </where>-->
+
+        //  id 가 1, 2, 3, 4 하나라도 해당될 경우
+        WHERE id IN (1, 2, 3, 4)
+        //  위와 동일하지만 배열의 길이가 동적일 경우 foreach 태그 이용, 자세한 속성은 검색 및 ppt 124p 참고
+        //  'idList' 라는 배열을 참조하여 item 의 값으로 배열 이름을 대체, seperator 의 값으로 반복문 사이 구분 문자열 삽입, open 과 close 로 구문 시작과 종료 시 문자열 삽입.
+        <foreach collection="idList" item="idx" separator="," open="(" close=")">
+            #{idx}
+        </foreach>
+        int[] idList = {1, 2, 3, 4}
+
+<!--        reg_id='abc'-->
+<!--        //  Mybatis 고급 문법 - 동적 쿼리 01-->
+<!--        //  <choose>, <when>, <otherwise> 태그는 if~else 처럼 비교 연산을 할 수 있는 태그이다.-->
+<!--        //  단 주의할 점은 choose 를 너무 남발해서 사용하지 않는 것이 쿼리문의 가독성을 향상시킬 수 있는 방법이다.-->
+<!--&lt;!&ndash;        <choose>&ndash;&gt;-->
+<!--&lt;!&ndash;            <when test="title!=null">&ndash;&gt;-->
+<!--&lt;!&ndash;                AND title = #{title}&ndash;&gt;-->
+<!--&lt;!&ndash;            </when>&ndash;&gt;-->
+<!--&lt;!&ndash;            <when test="title!=null">&ndash;&gt;-->
+<!--&lt;!&ndash;                AND title = #{title}&ndash;&gt;-->
+<!--&lt;!&ndash;            </when>&ndash;&gt;-->
+<!--&lt;!&ndash;            <otherwise>&ndash;&gt;-->
+<!--&lt;!&ndash;                AND id = 100&ndash;&gt;-->
+<!--&lt;!&ndash;            </otherwise>&ndash;&gt;-->
+<!--&lt;!&ndash;        </choose>&ndash;&gt;-->
+<!--&lt;!&ndash;        //  board 테이블에서 reg_id 가 abc 인 행을 찾는데 파라미터로 받은 값 중에 title이 null 값이 아닌 경우&ndash;&gt;-->
+<!--&lt;!&ndash;        //  reg_id 가 abc 이고 title 이 특정한 값을 포함한 행을 찾게 된다.&ndash;&gt;-->
+<!--&lt;!&ndash;        <if test="title !=null">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            title = 'abc'&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            AND title = #{title}     //  #{} 로 abc 라는 값을 BoardVO 에서 받아온 변수로 쓸 수 있음.&ndash;&gt;-->
+<!--&lt;!&ndash;        </if>&ndash;&gt;-->
 
     </select>
 
