@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.BoardMapper">
+
+<!--    //  밑에서 id 등 다른 이름으로 바꾸고 싶을 때 property 로 바꿀 수 있고-->
+<!--    //  jataType으로 Date 형식도 바꿔서 할 수 있도록 resultMap 사용!-->
+<!--    <resultMap id="boardResult" type="BoardVO">-->
+<!--        <id column="id" property="no" />-->
+<!--        <result column="title" property="title" />-->
+<!--        <result column="reg_date" javaType="java.sql.Date" />-->
+<!--    </resultMap>-->
+
+<!--    //  원래는 resultType에 com.example.demo.board.model.BoardVO 다 쳐야 하지만-->
+<!--    //  application.properties 에서 mybatis.type-aliases 에서 설정했기 떄문에 BoardVO 만 입력해도 됨!-->
+<!--    //  위에서 resultMap 한 경우 resultType 대신 resultMap 으로 적용!-->
+<!--&lt;!&ndash;    <select id="selectItem" resultType="BoardVO">&ndash;&gt;-->
+<!--    <select id="selectItem" resultMap="boardResult">-->
+
+<!--        SELECT-->
+<!--            id,-->
+<!--            title,-->
+<!--            content,-->
+<!--            writer,-->
+<!--            reg_date,   // regDate로 _를 없애줘야 하는데 application.properties 에서 underscore-to-camel-case=true 설정으로 자동 변환 가능능            count-->
+<!--            count-->
+<!--        FROM board-->
+
+<!--&lt;!&ndash;        //  밑의 동적 쿼리 01 방식으로 하지 않고 <where> 태그를 이용해 동적인 WHERE 절을 구현할 수 있게 해준다.&ndash;&gt;-->
+<!--&lt;!&ndash;        //  쿼리문에는 WHERE 키워드가 없지만 태그에서 자동으로 where 키워드를 생성해주며, AND 문 또한 자동으로 문법에 맞게 치환해준다.&ndash;&gt;-->
+<!--&lt;!&ndash;        <where>&ndash;&gt;-->
+<!--&lt;!&ndash;            <if test="title != null and title = ''">&ndash;&gt;-->
+<!--&lt;!&ndash;                AND title =#{title}&ndash;&gt;-->
+<!--&lt;!&ndash;            </if>&ndash;&gt;-->
+<!--&lt;!&ndash;            <if test="id > 0">&ndash;&gt;-->
+<!--&lt;!&ndash;                AND id = 100&ndash;&gt;-->
+<!--&lt;!&ndash;            </if>&ndash;&gt;-->
+<!--&lt;!&ndash;        </where>&ndash;&gt;-->
+
+<!--        //  id 가 1, 2, 3, 4 하나라도 해당될 경우-->
+<!--        WHERE id IN (1, 2, 3, 4)-->
+<!--        //  위와 동일하지만 배열의 길이가 동적일 경우 foreach 태그 이용, 자세한 속성은 검색 및 ppt 124p 참고-->
+<!--        //  'idList' 라는 배열을 참조하여 item 의 값으로 배열 이름을 대체, seperator 의 값으로 반복문 사이 구분 문자열 삽입, open 과 close 로 구문 시작과 종료 시 문자열 삽입.-->
+<!--        <foreach collection="idList" item="idx" separator="," open="(" close=")">-->
+<!--            #{idx}-->
+<!--        </foreach>-->
+<!--        int[] idList = {1, 2, 3, 4}-->
+
+<!--&lt;!&ndash;        //  < 표시를 경고 없이 표시하는 방법 두 가지&ndash;&gt;-->
+<!--&lt;!&ndash;        WHERE id <![CDATA[ < ]]> 0  // 여기서 <![CDATA[ 쿼리문 ]]> 으로 쿼리문 전체(SELECT~)를 씌울 수도 있음.&ndash;&gt;-->
+<!--&lt;!&ndash;        WHERE id &lt; 0&ndash;&gt;-->
+
+<!--&lt;!&ndash;        reg_id='abc'&ndash;&gt;-->
+<!--&lt;!&ndash;        //  Mybatis 고급 문법 - 동적 쿼리 01&ndash;&gt;-->
+<!--&lt;!&ndash;        //  <choose>, <when>, <otherwise> 태그는 if~else 처럼 비교 연산을 할 수 있는 태그이다.&ndash;&gt;-->
+<!--&lt;!&ndash;        //  단 주의할 점은 choose 를 너무 남발해서 사용하지 않는 것이 쿼리문의 가독성을 향상시킬 수 있는 방법이다.&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        <choose>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <when test="title!=null">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                AND title = #{title}&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            </when>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <when test="title!=null">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                AND title = #{title}&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            </when>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <otherwise>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                AND id = 100&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            </otherwise>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        </choose>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        //  board 테이블에서 reg_id 가 abc 인 행을 찾는데 파라미터로 받은 값 중에 title이 null 값이 아닌 경우&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        //  reg_id 가 abc 이고 title 이 특정한 값을 포함한 행을 찾게 된다.&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        <if test="title !=null">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;&lt;!&ndash;            title = 'abc'&ndash;&gt;&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            AND title = #{title}     //  #{} 로 abc 라는 값을 BoardVO 에서 받아온 변수로 쓸 수 있음.&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        </if>&ndash;&gt;&ndash;&gt;-->
+
+<!--    </select>-->
+
+<!--    <insert id="insertItem">-->
+<!--        쿼리문-->
+<!--    </insert>-->
+
+<!--    <update id="updateItem">-->
+<!--        쿼리문-->
+<!--    </update>-->
+
+<!--    <delete id="deleteItem">-->
+<!--        쿼리문-->
+<!--    </delete>-->
+<!--    -->
+
+
+<!--    =============================================================================================-->
+
+
+<!--    만약 아래와 같은 쿼리문이 db에서 작성되어있다고 가정할 때 각 값을 넣어주는 법-->
+<!--    CREATE TABLE tbl (-->
+<!--        id varchar(20) not null,-->
+<!--        nm varchar(100) not null,-->
+<!--        primary key (id)-->
+<!--    )-->
+
+<!--    물론 java에서 할 수도 있지만 Mybatis에서도 sql 을 사용하여 값을 뽑아내거나 할 수 있음.-->
+    <insert id="insertData" parameterType="TblVO">
+<!--        가상의 테이블 DUAL 에서 id와 날짜를 해당 형식으로 합쳐서 idSeq 로 만들었다고 할 때~ -->
+<!--        결과값은 string 타입, INSERT 문(쿼리문) 전에(BEFORE) selectKey 실행, 결과값의 이름은 idSeq 로 값 저장-->
+        <selectKey resultType="string" order="BEFORE" keyProperty="idSeq">
+            SELECT CONCAT('tbl_id', DATE_FORMAT(NOW(), '%y%m%d%h%i%s')) AS idSeq FROM DUAL;
+        </selectKey>
+
+        INSERT INTO tbl (
+            id,
+            nm
+        ) VALUES (
+            #{idSeq},
+            #{nm}
+        )
+    </insert>
+
+</mapper>
