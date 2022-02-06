@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <property name="LOG_DIR" value="/Users/haneol/log_files"/>
+    <property name="LOG_PREFIX" value="out"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${LOG_PREFIX}.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyyy-MM-dd HH:mm:ss}- %-5level - %msg%n</Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/archived/${LOG_PREFIX}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggereingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggereingPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>   // 출력할 떄는 날짜와 시분초를 먼저 찍고, 어떤 thread 인지, logLevel 은 어떻게 되는지, 메세지는 어떤지 라는 형식으로 찍을 것임
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level 5logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="jdbc" level="OFF" />
+    <logger name="jdbc.connection" level="OFF" />
+    <logger name="jdbc.sqlonly" level="OFF" />
+    <logger name="jdbc.audit" level="OFF" />
+    <logger name="jdbc.resultset" level="OFF" />
+
+    <logger name="jdbc.sqltiming" level="DEBUG">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="jdbc.resultsettable" level="DEBUG">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+
+    //  info level 은 STDOUT 창에 info를 띄우는 것을 의미. STDOUT 창이란 여러가지 log들? 뜨는 아래 챙
+    <root level="info">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
