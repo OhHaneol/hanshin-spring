@@ -1,10 +1,13 @@
 package com.example.chapter6.member.controller;
 
+import com.example.chapter6.model.MemberVO;
 import com.example.chapter6.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,10 +58,18 @@ public class MemberController {
             Map<String, String> validate = memberService.formValidation(errors);
 
             for(String key : validate.keySet()) {
-                logger.info(key, validate, get(key)); 
+                logger.info(key, validate.get(key));
+                //  controller 에서 view 로 데이터를 넘기려면? model!
+                model.addAttribute(key, validate.get(key));
             }
 
+            return "member/join";
+
         }
+
+        //  아이디 중복 체크
+        boolean idCheck = memberService.duplicateId(memberVO.getUserId());
+
 //        if(!userId.equals("")) {
 //            Boolean res = memberService.duplicateId(userId);
 //            logger.info("가입여부 -{}", res);

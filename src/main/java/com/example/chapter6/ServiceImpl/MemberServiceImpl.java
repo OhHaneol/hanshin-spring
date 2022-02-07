@@ -1,6 +1,7 @@
 package com.example.chapter6.ServiceImpl;
 
 import com.example.chapter6.mapper.MemberMapper;
+import com.example.chapter6.model.MemberVO;
 import com.example.chapter6.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,18 +22,38 @@ public class MemberServiceImpl implements MemberService {
         this.memberMapper = memberMapper;
     }
 
-    /*
-    *  아이디 중복 체크
-    * */
+    /**
+     * 아이디 중복 체크
+     * @param id
+     * @return
+     */
     @Override
     public Boolean duplicateId(String id) {
         Boolean res = memberMapper.duplicateId(id);
         return res? true:false;
     }
 
-    /*
-    * 회원가입 폼 검증
-    * */
+    /**
+     * 이메일 중복 체크
+     * @param email
+     * @return
+     */
+    @Override
+    public Boolean duplicateEmail(String email) {
+        Boolean res = memberMapper.duplicateEmail(email);
+        return res? true:false;
+    }
+
+    @Override
+    public void insertMember(MemberVO memberVO) {
+
+    }
+
+    /**
+     * 회원가입 폼 검증
+     * @param errors
+     * @return
+     */
     @Override
     public Map<String, String> formValidation(Errors errors) {
         Map<String, String> result = new HashMap<>();
