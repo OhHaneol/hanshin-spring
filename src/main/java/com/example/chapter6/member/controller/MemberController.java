@@ -52,7 +52,7 @@ public class MemberController {
     public String memberJoinPost(
 //            @RequestParam(value = "userId", defaultValue = "") String userId
             @Valid MemberVO memberVO, Errors errors, Model model
-    ) {
+    ) throws Exception {
 
         if (errors.hasErrors()) {
             Map<String, String> validate = memberService.formValidation(errors);
@@ -69,13 +69,13 @@ public class MemberController {
 
         //  아이디 중복 체크
         boolean idCheck = memberService.duplicateId(memberVO.getUserId());
+        //  이메일 중복 체크
+        boolean emailCheck = memberService.duplicateEmail(memberVO.getEmail());
+        //  만약 아이디와 이메일 모두 중복이 아니라면 회원 정보 추가해줌.
+        if(!idCheck && !emailCheck) memberService.insertMember(memberVO);
 
-//        if(!userId.equals("")) {
-//            Boolean res = memberService.duplicateId(userId);
-//            logger.info("가입여부 -{}", res);
-//        }
-
-        return "member/join";
+        //  회원가입 후 login 페이지를 반환해줌. 만약 member/login 으로만 하면 여긴 view?를 뿌리는거라 회원가입 다시 나와서 아래처럼 redirect 로 도메인 뒤에 페이지로 가라~ 해야 함.
+        return "redirect:/member/login";
     }
 
     @RequestMapping("/find_id")

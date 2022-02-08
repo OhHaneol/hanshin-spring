@@ -12,4 +12,28 @@
         WHERE user_id = #{id}
     </select>
 
+    <!-- 이메일 중복일체크 -->
+    <select id="duplicateEmail" parameterType="String" resultType="boolean">
+        SELECT IF(COUNT(*) <![CDATA[ >= ]]> 1, 1, 0)
+        FROM member
+        WHERE email = #{email}
+    </select>
+
+    <!--  회원 정보 저장  -->
+    <insert id="insertMember" parameterType="memberVO">
+        INSERT INTO member {
+            user_id,
+            email,
+            password,
+            name,
+            reg_date
+        } VALUES (
+            #{userId},
+            #{email},
+            #{password},
+            #{name},
+            NOW()
+        )
+    </insert>
+
 </mapper>

@@ -44,9 +44,13 @@ public class MemberServiceImpl implements MemberService {
         return res? true:false;
     }
 
+    /**
+     * 회원 가입 처리
+     * @param memberVO
+     */
     @Override
-    public void insertMember(MemberVO memberVO) {
-
+    public void insertMember(MemberVO memberVO) throws Exception {
+        memberMapper.insertMember(memberVO);
     }
 
     /**
