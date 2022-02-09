@@ -64,7 +64,7 @@ public class MemberServiceImpl implements MemberService {
 
         for(FieldError error : errors.getFieldErrors()) {
             String validKeyName = String.format("valid_%s", error.getField());
-            result.put(validKeyName, error.getDefaultMessage());
+            result.put(validKeyName, error.getDefaultMe ssage());
         }
 
         return result;

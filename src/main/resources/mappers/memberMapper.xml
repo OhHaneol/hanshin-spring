@@ -22,7 +22,7 @@
     <!--  회원 정보 저장  -->
     <insert id="insertMember" parameterType="memberVO">
         INSERT INTO member {
-            user_id,
+            user_id,화
             email,
             password,
             name,
@@ -30,10 +30,19 @@
         } VALUES (
             #{userId},
             #{email},
-            #{password},
+            SHA2(#{password}, 256),
             #{name},
             NOW()
         )
     </insert>
+
+    <!-- 로그인 처리 -->
+    <select id="loginProcess" parameterType="MemberVO" resultType="MemberVO">
+        SELECT
+            user_id,
+        FROM member
+            WHERE user_id = #{user_id}
+            AND password = SHA2(#{password}, 256)
+    </select>
 
 </mapper>
