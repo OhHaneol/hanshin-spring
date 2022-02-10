@@ -56,6 +56,7 @@ public class BoardController {
         String userId = sessionResult.getUserId();
 
         // code, title, content, userId
+        // 오류나는 부분 ch.7 배포 파일과 비교해서 해결...
         boardVO.setRegId(userId);
 
         boardService.insertBoardVO(boardVO);
