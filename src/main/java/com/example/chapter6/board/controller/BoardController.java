@@ -2,6 +2,7 @@ package com.example.chapter6.board.controller;
 
 import com.example.chapter6.model.BoardVO;
 import com.example.chapter6.model.MemberVO;
+import com.example.chapter6.model.Message;
 import com.example.chapter6.service.BoardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,19 +48,28 @@ public class BoardController {
     @PostMapping("/save")
     public String boardSave(
             @ModelAttribute BoardVO boardVO,
-            HttpServletRequest request
+            HttpServletRequest request,
+            Model model     // MemberController 에서 ModelAndView 랑 비슷. 그렇게 해도 되고 이렇게 해도 되고!
             ) {
 
         HttpSession session = request.getSession();
         MemberVO sessionResult = (MemberVO) session.getAttribute("memberVO");
 
-        String userId = sessionResult.getUserId();
+        // 로그인 여부(세션 유무)에 따라서 게시글 생성 가능/불가능
+        if(sessionResult != null) {
+            // 저장
+            String userId = sessionResult.getUserId();
 
-        // code, title, content, userId
-        // 오류나는 부분 ch.7 배포 파일과 비교해서 해결...
-        boardVO.setRegId(userId);
+            // code, title, content, userId
+            // 오류나는 부분 ch.7 배포 파일과 비교해서 해결...
+            boardVO.setRegId(userId);
 
-        boardService.insertBoardVO(boardVO);
+            boardService.insertBoardVO(boardVO);
+        } else {
+            // 세션 없음
+            model.addAttribute("data", new Message("로그인 후 이용하세요.", "/member/login"));
+            return "message/message";
+       }
 
         return "redirect:/board/list";
     }
