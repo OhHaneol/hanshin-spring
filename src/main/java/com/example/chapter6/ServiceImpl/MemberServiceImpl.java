@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,8 +61,19 @@ public class MemberServiceImpl implements MemberService {
      * @return
      */
     @Override
-    public MemberVO loginProcess(MemberVO memberVO) {
-        return memberMapper.loginProcess(memberVO);
+    public Boolean loginProcess(MemberVO memberVO, HttpServletRequest request) {
+        MemberVO result = memberMapper.loginProcess(memberVO);
+
+        if(result != null) {
+            // 세션 정보 생성
+            HttpSession session = request.getSession();
+            session.setAttribute("memberVO", result);
+            // 1시간 동안(60s * 60) 동작 없으면 세션 삭제
+            session.setMaxInactiveInterval(60 * 60);
+            return true;
+        }
+
+        return false;
     }
 
     /**

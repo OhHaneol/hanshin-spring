@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -82,15 +83,21 @@ public class MemberController {
     public String loginProcess(
             @RequestParam(value = "userId", defaultValue = "") String userId,
             @RequestParam(value = "password", defaultValue = "") String password
+            HttpServletRequest request
     ) {
         if(!userId.equals("") && !password.equals("")) {
             MemberVO memberVO = new MemberVO();
             memberVO.setUserId(userId);
             memberVO.setPassword(password);
 
-            MemberVO result = memberService.loginProcess(memberVO);
+            Boolean result = memberService.loginProcess(memberVO, request);
 
             logger.info("로그인 ={}", result);
+
+            //  로그인 실패 시 다시 로그인 페이지 로딩
+            if(result == false) {
+                return "redirect:/member/login";
+            }
 
             //  로그인 완료되면 메인페이지로(아직 메인페이지 안돼서 list로)
             return "redirect:/board/list";
