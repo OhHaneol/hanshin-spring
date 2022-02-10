@@ -11,5 +11,7 @@ public interface MemberMapper {
     Boolean duplicateEmail(String email);
 
     void insertMember(MemberVO memberVO);
+
+    MemberVO loginProcess(MemberVO memberVO);
 }
 

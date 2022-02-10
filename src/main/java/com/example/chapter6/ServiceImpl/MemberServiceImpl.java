@@ -54,6 +54,16 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
+     * 로그인 처리
+     * @param memberVO
+     * @return
+     */
+    @Override
+    public MemberVO loginProcess(MemberVO memberVO) {
+        return memberMapper.loginProcess(memberVO);
+    }
+
+    /**
      * 회원가입 폼 검증
      * @param errors
      * @return
@@ -64,7 +74,7 @@ public class MemberServiceImpl implements MemberService {
 
         for(FieldError error : errors.getFieldErrors()) {
             String validKeyName = String.format("valid_%s", error.getField());
-            result.put(validKeyName, error.getDefaultMe ssage());
+            result.put(validKeyName, error.getDefaultMessage());
         }
 
         return result;
