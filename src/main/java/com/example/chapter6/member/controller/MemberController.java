@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -79,10 +80,16 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
+    /**
+     * 로그인 처리
+     * @param userId
+     * @param password
+     * @return
+     */
     @PostMapping("/loginProcess")
     public String loginProcess(
             @RequestParam(value = "userId", defaultValue = "") String userId,
-            @RequestParam(value = "password", defaultValue = "") String password
+            @RequestParam(value = "password", defaultValue = "") String password,
             HttpServletRequest request
     ) {
         if(!userId.equals("") && !password.equals("")) {
@@ -114,6 +121,20 @@ public class MemberController {
     @RequestMapping("/find_pw")
     public String findPw() {
         return "member/find_pw";
+    }
+
+    /**
+     * 로그아웃
+     * @param request
+     * @return
+     */
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        //  세션 삭제
+        HttpSession session = request.getSession(false);
+        if(session != null) session.invalidate();
+
+        return "redirect:/member/login";
     }
 
 }
