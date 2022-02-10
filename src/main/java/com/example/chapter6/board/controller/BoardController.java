@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequestMapping("/board")
@@ -30,18 +31,60 @@ public class BoardController {
     }
 
     @RequestMapping("/list")
-    public String boardList() {
+    public String boardList(Model model) {
+
+        List<BoardVO> result = boardService.selectBoardVO();
+
+        model.addAttribute("result", result);
 
         return "board/list";
     }
 
+    @RequestMapping("/modify")
+    public String boardModify(
+            @RequestParam(value = "id", defaultValue = "0") int id,
+            Model model
+    ) {
+
+        if (id > 0) {
+            // 게시물 조회
+            BoardVO boardVO = boardService.selectBoardVOById(id);
+            model.addAttribute("boardVO", boardVO);
+        } else {
+            Message message = new Message();
+            message.setMessage("게시글이 없습니다.");
+            message.setHref("/board/list");
+            model.addAttribute("data", message);
+            return "message/message";
+        }
+
+        return "board/write";
+    }
+
     @RequestMapping("/view")
-    public String boardView() {
+    public String boardView(
+            @RequestParam(value = "id", defaultValue = "0") int id,
+            Model model
+    ) {
+
+        if (id > 0) {
+            // 게시물 조회
+            BoardVO boardVO = boardService.selectBoardVOById(id);
+            model.addAttribute("boardVO", boardVO);
+        } else {
+            Message message = new Message();
+            message.setMessage("게시글이 없습니다.");
+            message.setHref("/board/list");
+            model.addAttribute("data", message);
+            return "message/message";
+         }
+
         return "board/view";
     }
 
     @RequestMapping("/write")
-    public String boardWrite() {
+    public String boardWrite(Model model) {
+        model.addAttribute("boardVO", new BoardVO());
         return "board/write";
     }
 
@@ -64,7 +107,13 @@ public class BoardController {
             // 오류나는 부분 ch.7 배포 파일과 비교해서 해결...
             boardVO.setRegId(userId);
 
-            boardService.insertBoardVO(boardVO);
+            if(boardVO.getId() > 0) {
+                // 수정
+                boardService.updateBoardVO(boardVO);
+            } else {
+                // 저장
+                boardService.insertBoardVO(boardVO);
+            }
         } else {
             // 세션 없음
             model.addAttribute("data", new Message("로그인 후 이용하세요.", "/member/login"));
