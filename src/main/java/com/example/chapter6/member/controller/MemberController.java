@@ -1,6 +1,7 @@
 package com.example.chapter6.member.controller;
 
 import com.example.chapter6.model.MemberVO;
+import com.example.chapter6.model.Message;
 import com.example.chapter6.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -126,10 +128,10 @@ public class MemberController {
     }
 
     @PostMapping("/find_id")
-    public String findIdPost(
+    public ModelAndView findIdPost(
             @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "email", defaultValue = "") String email,
-            HttpServletResponse response    //  찾아낸 id 를 보여줄 창? 띄우기. 자세한 건 RestAPI 다룰 때 설명 확인.
+            ModelAndView mav
     ) throws IOException {
 
         if (!name.equals("") && !email.equals("")) {
@@ -144,12 +146,30 @@ public class MemberController {
             logger.info("찾은 id -{}", id);
 
             // 찾은 id 띄워주기.
-            response.setContentType("text/html; charset=UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert('찾으시는 ID는 " + id + "입니다.');location.href='/member/login'</script>");
-            out.flush();
+            if (id == null) {
+                // 찾는 ID 가 없습니다.
+                mav.addObject("data", new Message("찾으시는 계정이 없습니다.", "/member/find_id"));
+                mav.setViewName("message/message");     // messege 폴더의 message html 에 던져라
+                return mav;
+            } else {
+                // 찾는 id가 있습니다. id=abcd 로 가정
+                // 끝 두 자리는 ** 로 마스킹해서 전달
+
+                int idLength = id.length();         // 4
+                id = id.substring(0, idLength -2);  // ab
+                id += "**";                         // ab**
+
+                logger.info("id 마스킹 -{}", id);
+                mav.addObject("data", new Message(name + "님이 찾으시는 ID는 " + id + "입니다.", "/member/login"));
+                mav.setViewName("message/message");     // messege 폴더의 message html 에 던져라
+                return mav;
+            }
+
         }
+
+        mav.addObject("data", new Message("이름과 이메일을 확인하세요.", "/member/login"));
+        mav.setViewName("message/message");     // messege 폴더의 message html 에 던져라
+        return mav;
 
     }
 
