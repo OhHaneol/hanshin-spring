@@ -19,6 +19,12 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
+
+        // 로그인 해놓은 상태로 테스트 하기 위한 임시 코드
+        MemberVO m = new MemberVO();
+        m.setUserId("test");
+        session.setAttribute("memberVO", m);
+
         MemberVO memberVO = (MemberVO) session.getAttribute("memberVO");
 
         logger.info("로그인 인터셉트 ={}", memberVO);
