@@ -23,18 +23,18 @@
         </encoder>
     </appender>
 
+    //  additivity="false" 는 중복으로 찍히지 않도록 함(쿼리 결과~ 테이블)
+    <logger name="jdbc" level="OFF" additivity="false" />
+    <logger name="jdbc.connection" level="OFF" additivity="false" />
+    <logger name="jdbc.sqlonly" level="OFF" additivity="false" />
+    <logger name="jdbc.audit" level="OFF" additivity="false" />
+    <logger name="jdbc.resultset" level="OFF"  additivity="false"/>
 
-    <logger name="jdbc" level="OFF" />
-    <logger name="jdbc.connection" level="OFF" />
-    <logger name="jdbc.sqlonly" level="OFF" />
-    <logger name="jdbc.audit" level="OFF" />
-    <logger name="jdbc.resultset" level="OFF" />
-
-    <logger name="jdbc.sqltiming" level="DEBUG">
+    <logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
     </logger>
-    <logger name="jdbc.resultsettable" level="DEBUG">
+    <logger name="jdbc.resultsettable" level="DEBUG" additivity="false">
         <appender-ref ref="FILE"/>
         <appender-ref ref="STDOUT"/>
     </logger>

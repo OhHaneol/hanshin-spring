@@ -78,6 +78,27 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
+    @PostMapping("/loginProcess")
+    public String loginProcess(
+            @RequestParam(value = "userId", defaultValue = "") String userId,
+            @RequestParam(value = "password", defaultValue = "") String password
+    ) {
+        if(!userId.equals("") && !password.equals("")) {
+            MemberVO memberVO = new MemberVO();
+            memberVO.setUserId(userId);
+            memberVO.setPassword(password);
+
+            MemberVO result = memberService.loginProcess(memberVO);
+
+            logger.info("로그인 ={}", result);
+
+            //  로그인 완료되면 메인페이지로(아직 메인페이지 안돼서 list로)
+            return "redirect:/board/list";
+        }
+        //  로그인 실패 시 다시 로그인 페이지 로딩
+        return "redirect:/member/login";
+    }
+
     @RequestMapping("/find_id")
     public String findId() {
         return "member/find_id";
