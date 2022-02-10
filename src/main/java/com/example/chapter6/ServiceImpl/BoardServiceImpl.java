@@ -50,6 +50,15 @@ public class BoardServiceImpl implements BoardService {
     }
 
     /**
+     * 게시물 삭제
+     * @param id
+     */
+    @Override
+    public void deleteById(int id) {
+        boardMapper.deleteById(id);
+    }
+
+    /**
      * 게시물 저장
      * @param boardVO
      */

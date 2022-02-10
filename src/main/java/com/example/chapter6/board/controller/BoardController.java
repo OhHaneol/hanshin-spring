@@ -84,7 +84,9 @@ public class BoardController {
 
     @RequestMapping("/write")
     public String boardWrite(Model model) {
-        model.addAttribute("boardVO", new BoardVO());
+        BoardVO boardVO = new BoardVO();
+        boardVO.setCode(1000);
+        model.addAttribute("boardVO", boardVO);
         return "board/write";
     }
 
@@ -120,6 +122,34 @@ public class BoardController {
             return "message/message";
        }
 
+        return "redirect:/board/list";
+    }
+
+    /**
+     * 배열 형태로 게시물 삭제
+     * @param del
+     * @param model
+     * @return
+     */
+    @PostMapping("/delete")
+    public String delete(
+            @RequestParam(value = "del[]", defaultValue = "") int[] del,
+            Model model
+    ) {
+        logger.info("삭제 배열 -{}", del);
+
+        Message message = new Message();
+
+        if(del.length > 0) {
+            for (int i = 0; i<del.length; i++) {
+                boardService.deleteById(del[i]);
+            }
+            message.setMessage("삭제되었습니다.");
+        } else {
+            message.setMessage("삭제할 게시물을 선택하세요.");
+        }
+
+        model.addAttribute("data", message);
         return "redirect:/board/list";
     }
 

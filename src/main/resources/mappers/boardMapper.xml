@@ -65,5 +65,11 @@
             count = count + 1
         WHERE id = #{id}
     </update>
-    
+
+    <!-- 게시물 삭제 -->
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM board
+            WHERE id = #{id}
+    </delete>
+
 </mapper>

@@ -16,5 +16,7 @@ public interface BoardMapper {
 
     void updateCount(int id);
 
+    void deleteById(int id);
+
     void insertBoardVO(BoardVO boardVO);
 }
