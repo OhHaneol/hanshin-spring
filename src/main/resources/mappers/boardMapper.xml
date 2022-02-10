@@ -5,4 +5,22 @@
 
 <mapper namespace="com.example.chapter6.mapper.BoardMapper">
 
+    <!-- 게시물 저장 -->
+    <insert id="insertBoardVO" parameterType="BoardVO">
+        INSERT INTO board (
+            code,
+            title,
+            content,
+            reg_id,
+            reg_date
+        ) VALUES (
+            #{code},
+            #{title},
+            #{content},
+            #{reg_id},
+            NOW()
+
+        )
+    </insert>
+
 </mapper>
