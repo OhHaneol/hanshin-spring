@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BoardServiceImpl implements BoardService {
 
@@ -18,7 +20,38 @@ public class BoardServiceImpl implements BoardService {
         this.boardMapper = boardMapper;
     }
 
+    /**
+     * 게시물 목록
+     * @return
+     */
+    @Override
+    public List<BoardVO> selectBoardVO() {
+        return boardMapper.selectBoardVO();
+    }
 
+    /**
+     * 게시글 조회
+     * @param id
+     * @return
+     */
+    @Override
+    public BoardVO selectBoardVOById(int id) {
+        return boardMapper.selectBoardVOById(id);
+    }
+
+    /**
+     * 게시물 수정
+     * @param boardVO
+     */
+    @Override
+    public void updateBoardVO(BoardVO boardVO) {
+        boardMapper.updateBoardVO(boardVO);
+    }
+
+    /**
+     * 게시물 저장
+     * @param boardVO
+     */
     @Override
     public void insertBoardVO(BoardVO boardVO) {
         boardMapper.insertBoardVO(boardVO);

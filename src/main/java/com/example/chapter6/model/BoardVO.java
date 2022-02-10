@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class BoardVO extends SearchHelper {
 
-    private int id;
+    private int id = 0;
     private int code;
     private String title;
     private String content;
