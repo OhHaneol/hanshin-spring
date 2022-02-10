@@ -45,4 +45,13 @@
             AND password = SHA2(#{password}, 256)
     </select>
 
+    <!-- 아이디 찾기 -->
+    <!-- 첫 번째 단계~ MemberMapper.java로! -->
+    <select id="findUserId" parameterType="MemberVO" resultType="String">   <!-- UserId만 반환하면 되니까 String! -->
+        SELECT user_id AS userId
+            FROM member
+        WHERE name = #{name}
+            AND email = #{email}
+    </select>
+
 </mapper>

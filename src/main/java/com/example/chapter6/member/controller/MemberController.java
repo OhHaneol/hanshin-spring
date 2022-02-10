@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 @Controller
@@ -113,9 +116,41 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
-    @RequestMapping("/find_id")
+    /**
+     * 아이디 찾기 페이지
+     * @return
+     */
+    @GetMapping("/find_id")
     public String findId() {
         return "member/find_id";
+    }
+
+    @PostMapping("/find_id")
+    public String findIdPost(
+            @RequestParam(value = "name", defaultValue = "") String name,
+            @RequestParam(value = "email", defaultValue = "") String email,
+            HttpServletResponse response    //  찾아낸 id 를 보여줄 창? 띄우기. 자세한 건 RestAPI 다룰 때 설명 확인.
+    ) throws IOException {
+
+        if (!name.equals("") && !email.equals("")) {
+            // 전달받은 name과 email 을 통해서 memberVO 생성
+            MemberVO memberVO = new MemberVO();
+            memberVO.setName(name);
+            memberVO.setEmail(email);
+
+            // findUserId 통해서 id 찾기.
+            String id = memberService.findUserId(memberVO);
+
+            logger.info("찾은 id -{}", id);
+
+            // 찾은 id 띄워주기.
+            response.setContentType("text/html; charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('찾으시는 ID는 " + id + "입니다.');location.href='/member/login'</script>");
+            out.flush();
+        }
+
     }
 
     @RequestMapping("/find_pw")

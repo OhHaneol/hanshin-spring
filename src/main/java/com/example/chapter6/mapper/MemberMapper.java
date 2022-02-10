@@ -13,5 +13,8 @@ public interface MemberMapper {
     void insertMember(MemberVO memberVO);
 
     MemberVO loginProcess(MemberVO memberVO);
+
+//     두 번째 단계. MemberService.java 에 똑같이 붙여넣기.
+    String findUserId(MemberVO memberVO);
 }
 

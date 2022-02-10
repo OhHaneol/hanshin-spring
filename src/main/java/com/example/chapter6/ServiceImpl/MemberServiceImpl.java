@@ -77,6 +77,16 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
+     * 아이디 찾기
+     * @param memberVO
+     * @return
+     */
+    @Override
+    public String findUserId(MemberVO memberVO) {
+        return memberMapper.findUserId(memberVO);
+    }
+
+    /**
      * 회원가입 폼 검증
      * @param errors
      * @return

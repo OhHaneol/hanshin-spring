@@ -15,6 +15,9 @@ public interface MemberService {
     void insertMember(MemberVO memberVO) throws Exception;     // 예외가 발생할 수 있다면 throws Exception 을 여기와 MemberServicelmpl.java 파일에 적용
 
     Boolean loginProcess(MemberVO memberVO, HttpServletRequest request);
+    // 세 번째 단계. MemberServicelmpl.java 에서 구체화.
+    String findUserId(MemberVO memberVO);
 
     Map<String, String> formValidation(Errors errors);
+
 }
