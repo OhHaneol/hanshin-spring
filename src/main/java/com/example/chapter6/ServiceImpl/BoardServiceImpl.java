@@ -36,6 +36,7 @@ public class BoardServiceImpl implements BoardService {
      */
     @Override
     public BoardVO selectBoardVOById(int id) {
+        boardMapper.updateCount(id);    // 게시물 조회는 여기서 진행해서 굳이 controller 를 두 번 호출하지 않아도 됨.
         return boardMapper.selectBoardVOById(id);
     }
 

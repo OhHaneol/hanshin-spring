@@ -59,4 +59,11 @@
         WHERE id = #{id}
     </update>
 
+    <!-- 조회수 증가 -->
+    <update id="updateCount" parameterType="int">
+        UPDATE board SET
+            count = count + 1
+        WHERE id = #{id}
+    </update>
+    
 </mapper>
