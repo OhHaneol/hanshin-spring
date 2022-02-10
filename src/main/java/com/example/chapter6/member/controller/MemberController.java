@@ -1,5 +1,6 @@
 package com.example.chapter6.member.controller;
 
+import com.example.chapter6.Util.Util;
 import com.example.chapter6.model.MemberVO;
 import com.example.chapter6.model.Message;
 import com.example.chapter6.service.MemberService;
@@ -173,9 +174,48 @@ public class MemberController {
 
     }
 
-    @RequestMapping("/find_pw")
+    @GetMapping("/find_pw")
     public String findPw() {
         return "member/find_pw";
+    }
+
+    @PostMapping("find_pw")
+    public ModelAndView findPwPost(
+            @RequestParam(value = "userId", defaultValue = "") String userId,
+            @RequestParam(value = "name", defaultValue = "") String name,
+            @RequestParam(value = "email", defaultValue = "") String email,
+            ModelAndView mav
+    ) {
+        if ( !userId.equals("") && !name.equals("") && !email.equals("")) {
+            MemberVO memberVO = new MemberVO();
+            memberVO.setUserId(userId);
+            memberVO.setName(name);
+            memberVO.setEmail(email);
+
+            String id = memberService.findPassword(memberVO);
+
+            if(id == null) {
+                // 계정 없음
+                mav.addObject("data", new Message("찾으시는 계정이 존재하지 않습니다.", "/member/find_pw"));
+                mav.setViewName("message/message");     // messege 폴더의 message html 에 던져라
+                return mav;
+
+            } else {
+                // 계정이 있으면 비번을 임의로 변경하고 고지한다. 원래는 이메일로 전송...
+                String pw = Util.generateRandomString(10);
+                logger.info("pw -{}", pw);
+                memberVO.setPassword(pw);
+                memberService.updatePassword(memberVO);
+                mav.addObject("data", new Message("변경된 비밃번호는 " + pw + " 입니다.", "/member/login"));
+                mav.setViewName("message/message");     // messege 폴더의 message html 에 던져라
+                return mav;
+            }
+
+        }
+
+        mav.addObject("data", new Message("입력 정보를 확인하세요.", "/member/find_pw"));
+        mav.setViewName("message/message");     // messege 폴더의 message html 에 던져라
+        return mav;
     }
 
     /**

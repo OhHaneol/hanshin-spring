@@ -87,6 +87,25 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
+     * 비밀번호 찾기
+     * @param memberVO
+     * @return
+     */
+    @Override
+    public String findPassword(MemberVO memberVO) {
+        return memberMapper.findPassword(memberVO);
+    }
+
+    /**
+     * 비밀번호 업데이트
+     * @param memberVO
+     */
+    @Override
+    public void updatePassword(MemberVO memberVO) {
+        memberMapper.updatePassword(memberVO);
+    }
+
+    /**
      * 회원가입 폼 검증
      * @param errors
      * @return
