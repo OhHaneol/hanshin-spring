@@ -5,6 +5,33 @@
 
 <mapper namespace="com.example.chapter6.mapper.BoardMapper">
 
+    <!-- 게시물 목록 -->
+    <select id="selectBoardVO" resultType="BoardVO">
+        SELECT
+            id,
+            title,
+            count,
+            reg_id,
+            reg_date
+        FROM board
+            ORDER BY id DESC
+    </select>
+
+    <!-- 게시물 선택 -->
+    <select id="selectBoardVOById" parameterType="int" resultType="BoardVO">
+        SELECT
+            id,
+            code,
+            title,
+            content,
+            count,
+            reg_id,
+            reg_date,
+            mod_date
+        FROM board
+            WHERE id = #{id}
+    </select>
+
     <!-- 게시물 저장 -->
     <insert id="insertBoardVO" parameterType="BoardVO">
         INSERT INTO board (
@@ -22,5 +49,14 @@
 
         )
     </insert>
+
+    <!-- 게시물 수정 -->
+    <update id="updateBoardVO" parameterType="BoardVO">
+        UPDATE board SET
+            title = #{title},
+            content = #{content},
+            mod_date = NOW()
+        WHERE id = #{id}
+    </update>
 
 </mapper>
