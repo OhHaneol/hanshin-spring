@@ -22,8 +22,11 @@
             <span class="ms-3" th:text="@{|조회수 : *{count}|}"></span>
         </p>
     </header>
-    <section th:with="content = *{content}">
-        <p class="h6 mb-5" th:utext="${#strings.replace(content, '&#10;', '&lt;br&gt;')}"></p>
+    //<section th:with="content = *{content}">
+    //   <p class="h6 mb-5" th:utext="${#strings.replace(content, '&#10;', '&lt;br&gt;')}"></p>
+    //</section>
+    <section>
+        <p class="h6 mb-5" th:utext="*{content}"></p>
     </section>
     <hr>
     <div class="d-flex justify-content-between mb-3">
