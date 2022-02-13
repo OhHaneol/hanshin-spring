@@ -34,6 +34,32 @@
             <button type="submit" class="btn btn-success">저장</button>
             <a href="/board/list" class="btn btn-secondary">취소</a>
         </div>
+
+        <script type="text/javascript">
+            $(function(){
+                var oEditors = [];
+                nhn.husky.EZCreator.createInIFrame({
+                    oAppRef: oEditors,
+                    elPlaceholder: "content",
+                    sSkinURI: "/smarteditor2/SmartEditor2Skin.html",
+                    fCreator: "createSEditor2",
+                    htParams: {
+                        bUseToolbar: true,
+                        bUseVerticalResizer: true,
+                        bUseModeChanger: true,
+                        bSkipXssFilter: true,
+                    }, //boolean
+                    fCreator: "createSEditor2"
+                });
+
+                $('form').submit(function(e){
+                    e.preventDefault();
+                    oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD",[]);
+                    var content = $('#content').var();
+                    this.submit();
+                });
+            });
+        </script>
     </form>
 </body>
 </html>
