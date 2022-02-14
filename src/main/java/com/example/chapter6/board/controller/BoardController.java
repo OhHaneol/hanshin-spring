@@ -39,6 +39,7 @@ public class BoardController {
 
         List<BoardVO> result = boardService.selectBoardVO(searchHelper);
 
+        model.addAttribute("searchHelpr", searchHelper);    // 값 유지하기 위해서.
         model.addAttribute("result", result);
 
         return "board/list";
