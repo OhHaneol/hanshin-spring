@@ -6,7 +6,7 @@
 <mapper namespace="com.example.chapter6.mapper.BoardMapper">
 
     <!-- 게시물 목록 -->
-    <select id="selectBoardVO" resultType="BoardVO">
+    <select id="selectBoardVO" parameterType="searchHelper" resultType="BoardVO">
         SELECT
             id,
             title,
@@ -14,6 +14,14 @@
             reg_id,
             reg_date
         FROM board
+        <where>
+            <if test="srchType == 'title'">
+                AND title LIKE CONCAT('%', #{srchKeyword}, '%')
+            </if>
+            <if test="srchType == 'content'">
+                AND title LIKE CONCAT('%', #{srchKeyword}, '%')
+            </if>
+        </where>
             ORDER BY id DESC
     </select>
 

@@ -2,6 +2,7 @@ package com.example.chapter6.ServiceImpl;
 
 import com.example.chapter6.mapper.BoardMapper;
 import com.example.chapter6.model.BoardVO;
+import com.example.chapter6.model.SearchHelper;
 import com.example.chapter6.service.BoardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +26,8 @@ public class BoardServiceImpl implements BoardService {
      * @return
      */
     @Override
-    public List<BoardVO> selectBoardVO() {
-        return boardMapper.selectBoardVO();
+    public List<BoardVO> selectBoardVO(SearchHelper searchHelper) {
+        return boardMapper.selectBoardVO(searchHelper);
     }
 
     /**
