@@ -62,7 +62,7 @@
                         </div>
                     </td>
                     <td class="text-center" th:text="${result.id}"></td>
-                    <td><a th:href="@{/board/view(id=${result.id}, srchType=${searchHelper.srchType}, srchKeyword=${searchHelper.srchKeyword})}" th:text="${result.title}"></a></td>
+                    <td><a th:href="@{/board/view(id=${result.id}, srchCode=${searchHelper.srchCode}, srchType=${searchHelper.srchType}, srchKeyword=${searchHelper.srchKeyword})}" th:text="${result.title}"></a></td>
                     <td class="text-center" th:text="${result.regId}"></td>
                     <td class="text-center" th:text="${#temporals.format(result.regDate, 'yyyy-MM-dd HH:mm')}"></td>
                     <td class="text-center" th:text="${result.count}"></td>

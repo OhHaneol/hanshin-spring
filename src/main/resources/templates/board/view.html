@@ -31,10 +31,10 @@
     <hr>
     <div class="d-flex justify-content-between mb-3">
         <div>
-            <a th:href="@{/board/modify(id=*{id})}" class="btn btn-warning">수정</a>
+            <a th:href="@{/board/modify(id=*{id}, srchType=${searchHelper.srchType}, srchKeyword=${searchHelper.srchKeyword})}" class="btn btn-warning">수정</a>
             <button type="button" class="btn btn-danger">삭제</button>
         </div>
-        <a th:href="@{/board/list(srchType=${searchHelper.srchType}, srchKeyword=${searchHelper.srchKeyword})}" class="btn btn-secondary">목록</a>
+        <a th:href="@{/board/list(srchCode=${searchHelper.srchCode}, srchType=${searchHelper.srchType}, srchKeyword=${searchHelper.srchKeyword})}" class="btn btn-secondary">목록</a>
     </div>
 </article>
 </body>

@@ -48,6 +48,7 @@ public class BoardController {
     @RequestMapping("/modify")
     public String boardModify(
             @RequestParam(value = "id", defaultValue = "0") int id,
+            @ModelAttribute SearchHelper searchHelper,
             Model model
     ) {
 
@@ -55,10 +56,11 @@ public class BoardController {
             // 게시물 조회
             BoardVO boardVO = boardService.selectBoardVOById(id);
             model.addAttribute("boardVO", boardVO);
+            model.addAttribute("searchHelper", searchHelper);
         } else {
             Message message = new Message();
             message.setMessage("게시글이 없습니다.");
-            message.setHref("/board/list");
+            message.setHref("/board/list?srchCode=" + searchHelper.getSrchCode() + "$srchType=" + searchHelper.getSrchType() + "$srchKeyword=" + searchHelper.getSrchKeyword());
             model.addAttribute("data", message);
             return "message/message";
         }
