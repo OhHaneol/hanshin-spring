@@ -90,10 +90,14 @@ public class BoardController {
     }
 
     @RequestMapping("/write")
-    public String boardWrite(Model model) {
+    public String boardWrite(
+            @ModelAttribute SearchHelper searchHelper,
+            Model model
+    ) {
         BoardVO boardVO = new BoardVO();
         boardVO.setCode(1000);
         model.addAttribute("boardVO", boardVO);
+        model.addAttribute("searchHelper", searchHelper);
         return "board/write";
     }
 
