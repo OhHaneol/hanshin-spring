@@ -21,6 +21,9 @@
             <if test="srchType == 'content'">
                 AND title LIKE CONCAT('%', #{srchKeyword}, '%')
             </if>
+            <if test="srchCode">
+                AND code = #{srchCode}
+            </if>
         </where>
             ORDER BY id DESC
     </select>

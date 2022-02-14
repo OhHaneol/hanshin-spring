@@ -10,6 +10,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class SearchHelper {
+
+    private int srchCode = 1000;
     private String srchType;
     private String srchKeyword;
     private int page = 1;
