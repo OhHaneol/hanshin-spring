@@ -26,7 +26,11 @@
             </if>
         </where>
             ORDER BY id DESC
+            LIMIT #{startIndex}, #{pageSize}
     </select>
+
+    <!-- 게시물 목록 카운트 -->
+
 
     <!-- 게시물 선택 -->
     <select id="selectBoardVOById" parameterType="int" resultType="BoardVO">
