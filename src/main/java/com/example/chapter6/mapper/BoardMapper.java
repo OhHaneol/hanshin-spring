@@ -11,6 +11,8 @@ public interface BoardMapper {
 
     List<BoardVO> selectBoardVO(SearchHelper searchHelper);
 
+    int countBoardVO(SearchHelper searchHelper);
+
     BoardVO selectBoardVOById(int id);
 
     void updateBoardVO(BoardVO boardVO);

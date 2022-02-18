@@ -30,7 +30,22 @@
     </select>
 
     <!-- 게시물 목록 카운트 -->
-
+    <select id="countBoardVO" parameterType="SearchHelper" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM board
+        <where>
+            <if test="srchType == 'title'">
+                AND title LIKE CONCAT('%', #{srchKeyword}, '%')
+            </if>
+            <if test="srchType == 'content'">
+                AND title LIKE CONCAT('%', #{srchKeyword}, '%')
+            </if>
+            <if test="srchCode">
+                AND code = #{srchCode}
+            </if>
+        </where>
+    </select>
 
     <!-- 게시물 선택 -->
     <select id="selectBoardVOById" parameterType="int" resultType="BoardVO">

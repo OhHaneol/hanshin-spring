@@ -26,9 +26,7 @@ public class BoardServiceImpl implements BoardService {
      * @return
      */
     @Override
-    public List<BoardVO> selectBoardVO(SearchHelper searchHelper) {
-        return boardMapper.selectBoardVO(searchHelper);
-    }
+
 
     /**
      * 게시글 조회
